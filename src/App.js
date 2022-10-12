@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useDispatch } from "react-redux";
+import { addMoreTodo } from "./store/TodoSlice";
+import TodoList from "./TodoList";
+import Form from "./Form";
+import { useState } from "react";
 function App() {
+  const dispatch = useDispatch();
+  const [item, setItem] = useState("");
+
+  const add = (e) => {
+    e.preventDefault();
+    
+    dispatch(addMoreTodo(item));
+    setItem("");
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form add={add} item={item} setItem={setItem} />
+      <TodoList />
     </div>
   );
 }
