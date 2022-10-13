@@ -1,4 +1,11 @@
 import "./App.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
+import EditeTodo from "./EditeTodo";
 import { useDispatch } from "react-redux";
 import { addMoreTodo } from "./store/TodoSlice";
 import TodoList from "./TodoList";
@@ -10,15 +17,18 @@ function App() {
 
   const add = (e) => {
     e.preventDefault();
-    
+
     dispatch(addMoreTodo(item));
     setItem("");
   };
   return (
-    <div className="App">
+    <Router className="App">
       <Form add={add} item={item} setItem={setItem} />
-      <TodoList />
-    </div>
+      <Routes>
+        <Route path="edite/:id" element={<EditeTodo  />} />
+        <Route path="/" element={<TodoList />} />
+      </Routes>
+    </Router>
   );
 }
 

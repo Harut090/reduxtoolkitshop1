@@ -61,10 +61,34 @@ export const completeTodo = createAsyncThunk(
     }
   }
 );
+
+export const editeTodo = createAsyncThunk(
+  "edit/editTodo",
+  async function (todo, { rejectWithValue, dispatch }) {
+    const item = { title: todo.title, userId: 1, completed: false };
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/todos/${todo.id}`,
+        {
+          method: "PUT",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(item),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("we can't change this item");
+      }
+      const data = await response.json();
+      dispatch(editTodo({ id: todo.id, data: data }));
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 export const addMoreTodo = createAsyncThunk(
   "todos/addMoreTodo",
   async function (item, { rejectWithValue, dispatch }) {
-    console.log("hello");
     try {
       const todo = {
         title: item,
@@ -109,6 +133,15 @@ const todoSlice = createSlice({
     removeTodo(state, action) {
       state.todos = state.todos.filter((item) => item.id !== action.payload.id);
     },
+    editTodo(state, action) {
+      console.log(action.payload.data);
+      state.todos = state.todos.map((item) => {
+        if (item.id === action.payload.id) {
+          return action.payload.data;
+        }
+        return item;
+      });
+    },
   },
   extraReducers: {
     [fetchTodos.pending]: (state, action) => {
@@ -126,5 +159,5 @@ const todoSlice = createSlice({
   },
 });
 
-const { addTodo, doneTodo, removeTodo } = todoSlice.actions;
+const { addTodo, doneTodo, removeTodo, editTodo } = todoSlice.actions;
 export default todoSlice.reducer;

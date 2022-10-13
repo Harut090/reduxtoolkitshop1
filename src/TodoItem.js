@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import { completeTodo, deletTodo } from "./store/TodoSlice";
 import { useDispatch } from "react-redux";
 const TodoItem = ({ todo }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <div className="todo">
@@ -14,6 +16,13 @@ const TodoItem = ({ todo }) => {
             dispatch(completeTodo(todo.id));
           }}
         />
+        <button
+          onClick={() => {
+            navigate("/edite/" + todo.id);
+          }}
+        >
+          Edite
+        </button>
         <button
           onClick={() => {
             dispatch(deletTodo(todo.id));
