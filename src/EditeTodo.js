@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { editeTodo } from "./store/TodoSlice";
@@ -16,14 +17,14 @@ const EditeTodo = () => {
     setEdite("");
   };
   return (
-    <div>
+    <div className="edite-todo">
       <form onSubmit={submit}>
         <input
           type="text"
           value={edite}
           onChange={(e) => setEdite(e.target.value)}
         />
-        <button>Edite</button>
+        <button>Edit</button>
       </form>
     </div>
   );

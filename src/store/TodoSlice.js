@@ -66,6 +66,7 @@ export const editeTodo = createAsyncThunk(
   "edit/editTodo",
   async function (todo, { rejectWithValue, dispatch }) {
     const item = { title: todo.title, userId: 1, completed: false };
+    console.log(typeof todo.id);
     try {
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/todos/${todo.id}`,
@@ -80,7 +81,7 @@ export const editeTodo = createAsyncThunk(
         throw new Error("we can't change this item");
       }
       const data = await response.json();
-      dispatch(editTodo({ id: todo.id, data: data }));
+      dispatch(editTodo({ id: parseInt(data.id), data: data }));
     } catch (error) {
       return rejectWithValue(error.message);
     }

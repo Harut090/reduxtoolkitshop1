@@ -3,6 +3,18 @@
   background-color: rgb(150, 144, 137);
 }
 
+.edite-todo{
+  background-color:gray;
+  margin:10px auto;
+  width: 25%;
+}
+
+.edite-todo input{
+  border-radius: 10px;
+  display: inline-block;
+  width:86%;
+}
+
 .form{
   background-color:gray;
   margin:10px auto;
@@ -12,7 +24,7 @@
 .form input{
   border-radius: 10px;
   display: inline-block;
-  width:75%;
+  width:80%;
 }
 
 .form input::placeholder{
